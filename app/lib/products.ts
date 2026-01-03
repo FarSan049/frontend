@@ -1,0 +1,58 @@
+export const products = [
+  {
+    id: 1,
+    name: 'Monstera Deliciosa',
+    desc: 'Cocok untuk kantor dan ruang tamu.',
+    image: '/images/monstera.jpg',
+    category: 'indoor',
+  },
+  {
+    id: 2,
+    name: 'Sansevieria',
+    desc: 'Minimalis dan mudah perawatan.',
+    image: '/images/sansevieria.png',
+    category: 'indoor',
+  },
+  {
+    id: 3,
+    name: 'Ficus Lyrata',
+    desc: 'Memberi kesan profesional dan elegan.',
+    image: '/images/ficus.jpg',
+    category: 'indoor',
+  },
+  {
+    id: 4,
+    name: "Philodendron",
+    desc: "Hijau segar dan modern.",
+    image: "/images/monstera.jpg",
+    category: 'outdoor',
+  },
+  {
+    id: 5,
+    name: "Calathea",
+    desc: "Motif daun cantik untuk indoor.",
+    image: "/images/ficus.jpg",
+    category: 'outdoor',
+  },
+  {
+    id: 6,
+    name: "Calathea",
+    desc: "Motif daun cantik untuk indoor.",
+    image: "/images/ficus.jpg",
+    category: 'outdoor',
+  },
+  {
+    id: 7,
+    name: "Calathea",
+    desc: "Motif daun cantik untuk indoor.",
+    image: "/images/ficus.jpg",
+    category: 'outdoor',
+  },
+  {
+    id: 8,
+    name: "Calathea",
+    desc: "Motif daun cantik untuk indoor.",
+    image: "/images/ficus.jpg",
+    category: 'outdoor',
+  },
+]
