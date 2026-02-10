@@ -7,7 +7,7 @@ import { useHandleScrollTo } from "@/lib/handlescrollto";
 export default function Hero() {
   const handleScrollTo = useHandleScrollTo();
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden bg-green-50">
+    <section id="home" className="relative min-h-screen overflow-hidden bg-green-50 pt-24 md:pt-0">
       <div className="max-w-7xl mx-auto px-6 min-h-screen grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* TEXT */}
         <motion.div

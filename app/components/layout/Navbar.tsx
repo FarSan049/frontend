@@ -6,7 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-
 const navItems = [
   { label: "Home", href: "#home", type: "section" },
   { label: "Benefits", href: "#benefits", type: "section" },
@@ -23,14 +22,13 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const isKatalog = pathname === "/katalog";
 
-
-
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
+      const isMobile = window.innerWidth < 768; // md breakpoint Tailwind
+      setIsScrolled(isMobile ? true : window.scrollY > 80);
 
       navItems.forEach((item) => {
-        if (item.type !== "section") return; // ✅ PENTING
+        if (item.type !== "section") return;
 
         const section = document.querySelector(item.href);
         if (!section) return;
@@ -43,11 +41,15 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // initial check
+    window.addEventListener("resize", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
-
 
   return (
     <header
@@ -92,7 +94,6 @@ export default function Navbar() {
               );
             }
 
-
             // 👉 SECTION NAV (scroll)
             return (
               <button
@@ -104,8 +105,8 @@ export default function Navbar() {
                       ? "text-green-700 font-semibold"
                       : "text-green-900 hover:text-green-700"
                     : activeSection === item.href
-                    ? "text-green-800"
-                    : "text-green-900 hover:text-green-700"
+                      ? "text-green-800"
+                      : "text-green-900 hover:text-green-700"
                 }`}
               >
                 {item.label}
@@ -154,7 +155,7 @@ export default function Navbar() {
               >
                 {item.label}
               </button>
-            )
+            ),
           )}
 
           <a
