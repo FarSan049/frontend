@@ -1,54 +1,73 @@
 "use client";
+
 import Image from "next/image";
-import { products } from "@/lib/products";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 
-export default function KatalogPage() {
+interface Product {
+  id: string;
+  name: string;
+  desc: string;
+  images: any; // Can be string or array
+  idcategory: string;
+  category?: {
+    name: string;
+  };
+}
+
+interface Category {
+  id: string;
+  name: string;
+}
+
+interface KatalogClientProps {
+  initialProducts: Product[];
+  categories: Category[];
+}
+
+export default function KatalogClient({ initialProducts, categories }: KatalogClientProps) {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // Jumlah produk per halaman
+  const itemsPerPage = 6;
 
-  // Filter produk
-  const filteredProducts = products.filter((p) => {
-    const matchCategory = filter === "all" || p.category === filter;
-    const matchSearch =
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.desc.toLowerCase().includes(search.toLowerCase());
+  // Optimized filtering
+  const filteredProducts = useMemo(() => {
+    return initialProducts.filter((p) => {
+      const matchCategory = filter === "all" || p.idcategory === filter;
+      const matchSearch =
+        p.name.toLowerCase().includes(search.toLowerCase()) ||
+        p.desc.toLowerCase().includes(search.toLowerCase());
+      return matchCategory && matchSearch;
+    });
+  }, [initialProducts, filter, search]);
 
-    return matchCategory && matchSearch;
-  });
-
-  // Hitung total halaman
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-
-  // Dapatkan produk untuk halaman saat ini
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentProducts = filteredProducts.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentProducts = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
 
-  // Fungsi untuk pindah halaman
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 400, behavior: "smooth" });
   };
 
-  // Reset ke halaman 1 saat filter berubah
   const handleFilterChange = (newFilter: string) => {
     setFilter(newFilter);
     setCurrentPage(1);
+  };
+
+  const getImageUrl = (images: any) => {
+    if (Array.isArray(images) && images.length > 0) return images[0];
+    if (typeof images === 'string') return images;
+    return "/images/placeholder.jpg";
   };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-white-50">
       {/* Header */}
       <section className="relative min-h-175 flex items-center overflow-hidden">
-        {/* Background Image */}
         <div className="absolute inset-0 -z-10">
           <Image
             src="/images/katalogcover.jpg"
@@ -57,11 +76,9 @@ export default function KatalogPage() {
             priority
             className="object-cover object-center"
           />
-          {/* Overlay */}
           <div className="absolute inset-0 bg-linear-to-b from-white/5 via-gray-600/30 to-white" />
         </div>
 
-        {/* Content */}
         <div className="relative w-full">
           <div className="max-w-6xl mx-auto px-6 text-center text-white">
             <motion.div
@@ -89,10 +106,10 @@ export default function KatalogPage() {
                       setSearch(e.target.value);
                       setCurrentPage(1);
                     }}
-                    className="w-full rounded-full px-6 py-3 pr-12 text-white ring-2 ring-gray-300 focus:outline-none focus:ring-2 focus:ring-white"
+                    className="w-full rounded-full px-6 py-3 pr-12 text-zinc-900 focus:outline-none ring-2 ring-white/50 focus:ring-white transition shadow-lg"
                   />
                   <svg
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-green-700"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -109,19 +126,27 @@ export default function KatalogPage() {
 
               {/* FILTER */}
               <div className="mt-6 flex flex-wrap gap-3 justify-center">
-                {["all", "indoor", "outdoor"].map((cat) => (
+                <button
+                  onClick={() => handleFilterChange("all")}
+                  className={`px-6 py-2 rounded-full font-semibold transition-all backdrop-blur-md ${
+                    filter === "all"
+                      ? "bg-green-600 text-white shadow-lg"
+                      : "bg-white/80 text-green-800 hover:bg-white"
+                  }`}
+                >
+                  Semua
+                </button>
+                {categories.map((cat) => (
                   <button
-                    key={cat}
-                    onClick={() => handleFilterChange(cat)}
+                    key={cat.id}
+                    onClick={() => handleFilterChange(cat.id)}
                     className={`px-6 py-2 rounded-full font-semibold transition-all backdrop-blur-md ${
-                      filter === cat
+                      filter === cat.id
                         ? "bg-green-600 text-white shadow-lg"
                         : "bg-white/80 text-green-800 hover:bg-white"
                     }`}
                   >
-                    {cat === "all"
-                      ? "Semua"
-                      : cat.charAt(0).toUpperCase() + cat.slice(1)}
+                    {cat.name}
                   </button>
                 ))}
               </div>
@@ -130,19 +155,19 @@ export default function KatalogPage() {
         </div>
       </section>
 
-      {/* Filter Section */}
-      {/* <section className="py-8 bg-white border-b">
-        
-      </section> */}
-
       {/* Products Grid */}
       <section className="pt-5 pb-16">
         <div className="max-w-6xl mx-auto px-6">
-          {/* Info Pagination */}
           <div className="mb-6 text-center text-green-700">
-            Menampilkan {indexOfFirstItem + 1}-
-            {Math.min(indexOfLastItem, filteredProducts.length)} dari{" "}
-            {filteredProducts.length} produk
+            {filteredProducts.length > 0 ? (
+              <>
+                Menampilkan {indexOfFirstItem + 1}-
+                {Math.min(indexOfLastItem, filteredProducts.length)} dari{" "}
+                {filteredProducts.length} produk
+              </>
+            ) : (
+              "Tidak ada produk"
+            )}
           </div>
 
           <motion.div
@@ -162,8 +187,8 @@ export default function KatalogPage() {
                 <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
                   <div className="relative overflow-hidden">
                     <Image
-                      loading="eager"
-                      src={item.image}
+                      loading="lazy"
+                      src={getImageUrl(item.images)}
                       alt={item.name}
                       width={400}
                       height={400}
@@ -171,10 +196,13 @@ export default function KatalogPage() {
                     />
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
+                    <span className="text-[10px] font-bold text-green-700 uppercase tracking-widest mb-1">
+                      {item.category?.name || "Uncategorized"}
+                    </span>
                     <h3 className="text-xl font-semibold text-green-900">
                       {item.name}
                     </h3>
-                    <p className="mt-2 text-green-700 flex-1">{item.desc}</p>
+                    <p className="mt-2 text-green-700 flex-1 line-clamp-3">{item.desc}</p>
                     <a
                       href={`https://wa.me/6281314110863?text=Halo,%20saya%20tertarik%20dengan%20${item.name}`}
                       className="inline-block mt-4 text-green-700 font-semibold hover:underline hover:text-green-800 transition-colors"
@@ -204,7 +232,6 @@ export default function KatalogPage() {
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="mt-12 flex justify-center items-center gap-2">
-              {/* Previous Button */}
               <button
                 onClick={() => paginate(currentPage - 1)}
                 disabled={currentPage === 1}
@@ -214,31 +241,18 @@ export default function KatalogPage() {
                     : "bg-green-100 text-green-700 hover:bg-green-200"
                 }`}
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 19l-7-7 7-7"
-                  />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
 
-              {/* Page Numbers */}
               <div className="flex gap-2">
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                   (pageNumber) => {
-                    // Tampilkan page numbers dengan smart pagination
                     if (
                       pageNumber === 1 ||
                       pageNumber === totalPages ||
-                      (pageNumber >= currentPage - 1 &&
-                        pageNumber <= currentPage + 1)
+                      (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
                     ) {
                       return (
                         <button
@@ -258,10 +272,7 @@ export default function KatalogPage() {
                       pageNumber === currentPage + 2
                     ) {
                       return (
-                        <span
-                          key={pageNumber}
-                          className="px-2 flex items-center text-green-600"
-                        >
+                        <span key={pageNumber} className="px-2 flex items-center text-green-600">
                           ...
                         </span>
                       );
@@ -271,7 +282,6 @@ export default function KatalogPage() {
                 )}
               </div>
 
-              {/* Next Button */}
               <button
                 onClick={() => paginate(currentPage + 1)}
                 disabled={currentPage === totalPages}
@@ -281,18 +291,8 @@ export default function KatalogPage() {
                     : "bg-green-100 text-green-700 hover:bg-green-200"
                 }`}
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
             </div>
@@ -311,7 +311,7 @@ export default function KatalogPage() {
             sesuai dengan kebutuhan Anda
           </p>
           <a
-            href="https://wa.me/62xxxxxxxxxx?text=Halo,%20saya%20ingin%20konsultasi%20tentang%20tanaman"
+            href="https://wa.me/6281314110863?text=Halo,%20saya%20ingin%20konsultasi%20tentang%20tanaman"
             className="inline-flex items-center gap-2 mt-6 px-8 py-3 bg-green-700 text-white font-semibold rounded-full hover:bg-green-800 transition-colors duration-300 shadow-md hover:shadow-lg"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -328,18 +328,8 @@ export default function KatalogPage() {
           href="/"
           className="inline-flex items-center gap-2 text-green-700 font-semibold hover:text-green-800 transition-colors"
         >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           Kembali ke Beranda
         </Link>

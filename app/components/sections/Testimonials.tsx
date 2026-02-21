@@ -1,6 +1,15 @@
-import { testimonials } from "@/lib/testimonials"
+import { prisma } from "@/lib/db";
 
-export default function Testimonials() {
+export default async function Testimonials() {
+  const testimonials = await prisma.testimonial.findMany({
+    take: 6,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  if (testimonials.length === 0) return null;
+
   return (
     <section id="testimonials" className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-6 text-center">
@@ -9,9 +18,9 @@ export default function Testimonials() {
         </h2>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((item, index) => (
+          {testimonials.map((item) => (
             <div
-              key={index}
+              key={item.id}
               className="p-8 rounded-2xl bg-green-50"
             >
               <p className="text-green-800 italic">

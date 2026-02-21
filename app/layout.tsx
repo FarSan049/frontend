@@ -1,50 +1,69 @@
 import type { Metadata } from "next";
-import "@/globals.css";
-import Navbar from "@/components/layout/Navbar";
-import FloatingWhatsApp from '@/components/ui/FloatingWhatsApp';
-import Footer from '@/components/layout/Footer';
+import "./globals.css";
+import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Rental Tanaman Hias | Estetika Alami untuk Ruang Anda",
-  description:
-    "Sewa tanaman hias untuk kantor, event, dan rumah. Praktis, estetik, dan siap kirim.",
-  keywords: ["rental tanaman", "sewa tanaman hias", "tanaman kantor"],
-  openGraph: {
-    title: "Rental Tanaman Hias",
-    description: "Solusi estetika alami tanpa ribet",
-    type: "website",
-  },
-};
-
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: "Rental Tanaman Hias",
-  description: "Jasa sewa tanaman hias untuk kantor, event, dan rumah.",
-  url: "https://domainkamu.com",
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "customer service",
-    telephone: "+62xxxxxxxxxx",
-  },
+  title: "Wardhana Flower - Toko Bunga Terbaik di Surabaya",
+  description: "Wardhana Flower menyediakan berbagai macam bunga segar, bouquet, bunga papan, standing flower, dan dekorasi bunga untuk berbagai acara di Surabaya. Kualitas premium, desain elegan, dan pengiriman tepat waktu.",
+  keywords: "toko bunga surabaya, florist surabaya, bunga bouquet surabaya, bunga papan surabaya, karangan bunga surabaya, dekorasi bunga surabaya",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="id">
-      <body>
-        <script
+      <head>
+        <Script
+          id="schema-org"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "Wardhana Flower",
+              "image": "https://wardhanaflower.com/logo.png",
+              "@id": "https://wardhanaflower.com",
+              "url": "https://wardhanaflower.com",
+              "telephone": "+628123456789",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Jl. Kayoon No. 1",
+                "addressLocality": "Surabaya",
+                "postalCode": "60271",
+                "addressCountry": "ID"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": -7.2655,
+                "longitude": 112.7483
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                  "Sunday"
+                ],
+                "opens": "00:00",
+                "closes": "23:59"
+              },
+              "sameAs": [
+                "https://www.facebook.com/wardhanaflower",
+                "https://www.instagram.com/wardhanaflower"
+              ]
+            }),
+          }}
         />
-        <Navbar />
+      </head>
+      <body>
         {children}
-        <FloatingWhatsApp />
-        <Footer />
       </body>
     </html>
   );

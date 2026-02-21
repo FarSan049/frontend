@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useHandleScrollTo } from "@/lib/handlescrollto";
+import { useHandleScrollTo } from "@/app/lib/handlescrollto";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
