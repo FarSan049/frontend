@@ -199,7 +199,6 @@ export type TestimonialOrderByWithRelationInput = {
   message?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  _relevance?: Prisma.TestimonialOrderByRelevanceInput
 }
 
 export type TestimonialWhereUniqueInput = Prisma.AtLeast<{
@@ -301,12 +300,6 @@ export type TestimonialUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type TestimonialOrderByRelevanceInput = {
-  fields: Prisma.TestimonialOrderByRelevanceFieldEnum | Prisma.TestimonialOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
-}
-
 export type TestimonialCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -345,7 +338,23 @@ export type TestimonialSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   updatedAt?: boolean
 }, ExtArgs["result"]["testimonial"]>
 
+export type TestimonialSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name?: boolean
+  role?: boolean
+  message?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["testimonial"]>
 
+export type TestimonialSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  name?: boolean
+  role?: boolean
+  message?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["testimonial"]>
 
 export type TestimonialSelectScalar = {
   id?: boolean
@@ -486,6 +495,30 @@ export interface TestimonialDelegate<ExtArgs extends runtime.Types.Extensions.In
   createMany<T extends TestimonialCreateManyArgs>(args?: Prisma.SelectSubset<T, TestimonialCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Testimonials and returns the data saved in the database.
+   * @param {TestimonialCreateManyAndReturnArgs} args - Arguments to create many Testimonials.
+   * @example
+   * // Create many Testimonials
+   * const testimonial = await prisma.testimonial.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Testimonials and only return the `id`
+   * const testimonialWithIdOnly = await prisma.testimonial.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends TestimonialCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, TestimonialCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Testimonial.
    * @param {TestimonialDeleteArgs} args - Arguments to delete one Testimonial.
    * @example
@@ -548,6 +581,36 @@ export interface TestimonialDelegate<ExtArgs extends runtime.Types.Extensions.In
    * 
    */
   updateMany<T extends TestimonialUpdateManyArgs>(args: Prisma.SelectSubset<T, TestimonialUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Testimonials and returns the data updated in the database.
+   * @param {TestimonialUpdateManyAndReturnArgs} args - Arguments to update many Testimonials.
+   * @example
+   * // Update many Testimonials
+   * const testimonial = await prisma.testimonial.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Testimonials and only return the `id`
+   * const testimonialWithIdOnly = await prisma.testimonial.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends TestimonialUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, TestimonialUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TestimonialPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Testimonial.
@@ -952,6 +1015,25 @@ export type TestimonialCreateManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
+ * Testimonial createManyAndReturn
+ */
+export type TestimonialCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Testimonial
+   */
+  select?: Prisma.TestimonialSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Testimonial
+   */
+  omit?: Prisma.TestimonialOmit<ExtArgs> | null
+  /**
+   * The data used to create many Testimonials.
+   */
+  data: Prisma.TestimonialCreateManyInput | Prisma.TestimonialCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
  * Testimonial update
  */
 export type TestimonialUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -977,6 +1059,32 @@ export type TestimonialUpdateArgs<ExtArgs extends runtime.Types.Extensions.Inter
  * Testimonial updateMany
  */
 export type TestimonialUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Testimonials.
+   */
+  data: Prisma.XOR<Prisma.TestimonialUpdateManyMutationInput, Prisma.TestimonialUncheckedUpdateManyInput>
+  /**
+   * Filter which Testimonials to update
+   */
+  where?: Prisma.TestimonialWhereInput
+  /**
+   * Limit how many Testimonials to update.
+   */
+  limit?: number
+}
+
+/**
+ * Testimonial updateManyAndReturn
+ */
+export type TestimonialUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Testimonial
+   */
+  select?: Prisma.TestimonialSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Testimonial
+   */
+  omit?: Prisma.TestimonialOmit<ExtArgs> | null
   /**
    * The data used to update Testimonials.
    */

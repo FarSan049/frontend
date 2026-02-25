@@ -174,39 +174,20 @@ export const JsonNullValueInput = {
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
+export const QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+} as const
+
+export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
 export const NullsOrder = {
   first: 'first',
   last: 'last'
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-export const UserOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  password: 'password'
-} as const
-
-export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
-
-
-export const SessionOrderByRelevanceFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  tokenHash: 'tokenHash'
-} as const
-
-export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum]
-
-
-export const CategoryOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name'
-} as const
-
-export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevanceFieldEnum)[keyof typeof CategoryOrderByRelevanceFieldEnum]
 
 
 export const JsonNullValueFilter = {
@@ -216,52 +197,4 @@ export const JsonNullValueFilter = {
 } as const
 
 export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-export const QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
-} as const
-
-export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
-export const ProductOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  desc: 'desc',
-  idcategory: 'idcategory'
-} as const
-
-export type ProductOrderByRelevanceFieldEnum = (typeof ProductOrderByRelevanceFieldEnum)[keyof typeof ProductOrderByRelevanceFieldEnum]
-
-
-export const TestimonialOrderByRelevanceFieldEnum = {
-  id: 'id',
-  name: 'name',
-  role: 'role',
-  message: 'message'
-} as const
-
-export type TestimonialOrderByRelevanceFieldEnum = (typeof TestimonialOrderByRelevanceFieldEnum)[keyof typeof TestimonialOrderByRelevanceFieldEnum]
-
-
-export const BenefitOrderByRelevanceFieldEnum = {
-  id: 'id',
-  title: 'title',
-  desc: 'desc',
-  icon: 'icon'
-} as const
-
-export type BenefitOrderByRelevanceFieldEnum = (typeof BenefitOrderByRelevanceFieldEnum)[keyof typeof BenefitOrderByRelevanceFieldEnum]
-
-
-export const HeroOrderByRelevanceFieldEnum = {
-  id: 'id',
-  title: 'title',
-  motto: 'motto',
-  subtitle: 'subtitle'
-} as const
-
-export type HeroOrderByRelevanceFieldEnum = (typeof HeroOrderByRelevanceFieldEnum)[keyof typeof HeroOrderByRelevanceFieldEnum]
 

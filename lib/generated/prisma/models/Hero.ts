@@ -204,7 +204,6 @@ export type HeroOrderByWithRelationInput = {
   images?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  _relevance?: Prisma.HeroOrderByRelevanceInput
 }
 
 export type HeroWhereUniqueInput = Prisma.AtLeast<{
@@ -316,12 +315,6 @@ export type HeroUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type HeroOrderByRelevanceInput = {
-  fields: Prisma.HeroOrderByRelevanceFieldEnum | Prisma.HeroOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
-}
-
 export type HeroCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
@@ -362,7 +355,25 @@ export type HeroSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
 }, ExtArgs["result"]["hero"]>
 
+export type HeroSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  title?: boolean
+  motto?: boolean
+  subtitle?: boolean
+  images?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["hero"]>
 
+export type HeroSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  title?: boolean
+  motto?: boolean
+  subtitle?: boolean
+  images?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["hero"]>
 
 export type HeroSelectScalar = {
   id?: boolean
@@ -505,6 +516,30 @@ export interface HeroDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
   createMany<T extends HeroCreateManyArgs>(args?: Prisma.SelectSubset<T, HeroCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Heroes and returns the data saved in the database.
+   * @param {HeroCreateManyAndReturnArgs} args - Arguments to create many Heroes.
+   * @example
+   * // Create many Heroes
+   * const hero = await prisma.hero.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Heroes and only return the `id`
+   * const heroWithIdOnly = await prisma.hero.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends HeroCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, HeroCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeroPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Hero.
    * @param {HeroDeleteArgs} args - Arguments to delete one Hero.
    * @example
@@ -567,6 +602,36 @@ export interface HeroDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
    * 
    */
   updateMany<T extends HeroUpdateManyArgs>(args: Prisma.SelectSubset<T, HeroUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Heroes and returns the data updated in the database.
+   * @param {HeroUpdateManyAndReturnArgs} args - Arguments to update many Heroes.
+   * @example
+   * // Update many Heroes
+   * const hero = await prisma.hero.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Heroes and only return the `id`
+   * const heroWithIdOnly = await prisma.hero.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends HeroUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, HeroUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HeroPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Hero.
@@ -972,6 +1037,25 @@ export type HeroCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * Hero createManyAndReturn
+ */
+export type HeroCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Hero
+   */
+  select?: Prisma.HeroSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Hero
+   */
+  omit?: Prisma.HeroOmit<ExtArgs> | null
+  /**
+   * The data used to create many Heroes.
+   */
+  data: Prisma.HeroCreateManyInput | Prisma.HeroCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
  * Hero update
  */
 export type HeroUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -997,6 +1081,32 @@ export type HeroUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
  * Hero updateMany
  */
 export type HeroUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Heroes.
+   */
+  data: Prisma.XOR<Prisma.HeroUpdateManyMutationInput, Prisma.HeroUncheckedUpdateManyInput>
+  /**
+   * Filter which Heroes to update
+   */
+  where?: Prisma.HeroWhereInput
+  /**
+   * Limit how many Heroes to update.
+   */
+  limit?: number
+}
+
+/**
+ * Hero updateManyAndReturn
+ */
+export type HeroUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Hero
+   */
+  select?: Prisma.HeroSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Hero
+   */
+  omit?: Prisma.HeroOmit<ExtArgs> | null
   /**
    * The data used to update Heroes.
    */

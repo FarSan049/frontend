@@ -19,12 +19,13 @@ async function main() {
     console.log(`Found ${categoriesTemp.length} unique categories:`, categoriesTemp);
 
     for (const catName of categoriesTemp) {
+      console.log(`Checking/Creating category: ${catName}...`);
       const result = await prisma.category.upsert({
         where: { name: catName },
         update: {},
         create: { name: catName },
       });
-      console.log(`Upserted category: ${catName} (ID: ${result.id})`);
+      console.log(`Result: ${catName} is ready (ID: ${result.id})`);
     }
 
     const allCategories = await prisma.category.findMany();

@@ -199,7 +199,6 @@ export type BenefitOrderByWithRelationInput = {
   icon?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  _relevance?: Prisma.BenefitOrderByRelevanceInput
 }
 
 export type BenefitWhereUniqueInput = Prisma.AtLeast<{
@@ -301,12 +300,6 @@ export type BenefitUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type BenefitOrderByRelevanceInput = {
-  fields: Prisma.BenefitOrderByRelevanceFieldEnum | Prisma.BenefitOrderByRelevanceFieldEnum[]
-  sort: Prisma.SortOrder
-  search: string
-}
-
 export type BenefitCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
@@ -345,7 +338,23 @@ export type BenefitSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updatedAt?: boolean
 }, ExtArgs["result"]["benefit"]>
 
+export type BenefitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  title?: boolean
+  desc?: boolean
+  icon?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["benefit"]>
 
+export type BenefitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
+  title?: boolean
+  desc?: boolean
+  icon?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+}, ExtArgs["result"]["benefit"]>
 
 export type BenefitSelectScalar = {
   id?: boolean
@@ -486,6 +495,30 @@ export interface BenefitDelegate<ExtArgs extends runtime.Types.Extensions.Intern
   createMany<T extends BenefitCreateManyArgs>(args?: Prisma.SelectSubset<T, BenefitCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
+   * Create many Benefits and returns the data saved in the database.
+   * @param {BenefitCreateManyAndReturnArgs} args - Arguments to create many Benefits.
+   * @example
+   * // Create many Benefits
+   * const benefit = await prisma.benefit.createManyAndReturn({
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Create many Benefits and only return the `id`
+   * const benefitWithIdOnly = await prisma.benefit.createManyAndReturn({
+   *   select: { id: true },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  createManyAndReturn<T extends BenefitCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, BenefitCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BenefitPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+  /**
    * Delete a Benefit.
    * @param {BenefitDeleteArgs} args - Arguments to delete one Benefit.
    * @example
@@ -548,6 +581,36 @@ export interface BenefitDelegate<ExtArgs extends runtime.Types.Extensions.Intern
    * 
    */
   updateMany<T extends BenefitUpdateManyArgs>(args: Prisma.SelectSubset<T, BenefitUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
+
+  /**
+   * Update zero or more Benefits and returns the data updated in the database.
+   * @param {BenefitUpdateManyAndReturnArgs} args - Arguments to update many Benefits.
+   * @example
+   * // Update many Benefits
+   * const benefit = await prisma.benefit.updateManyAndReturn({
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * 
+   * // Update zero or more Benefits and only return the `id`
+   * const benefitWithIdOnly = await prisma.benefit.updateManyAndReturn({
+   *   select: { id: true },
+   *   where: {
+   *     // ... provide filter here
+   *   },
+   *   data: [
+   *     // ... provide data here
+   *   ]
+   * })
+   * Note, that providing `undefined` is treated as the value not being there.
+   * Read more here: https://pris.ly/d/null-undefined
+   * 
+   */
+  updateManyAndReturn<T extends BenefitUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, BenefitUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BenefitPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Benefit.
@@ -952,6 +1015,25 @@ export type BenefitCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Benefit createManyAndReturn
+ */
+export type BenefitCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Benefit
+   */
+  select?: Prisma.BenefitSelectCreateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Benefit
+   */
+  omit?: Prisma.BenefitOmit<ExtArgs> | null
+  /**
+   * The data used to create many Benefits.
+   */
+  data: Prisma.BenefitCreateManyInput | Prisma.BenefitCreateManyInput[]
+  skipDuplicates?: boolean
+}
+
+/**
  * Benefit update
  */
 export type BenefitUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -977,6 +1059,32 @@ export type BenefitUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
  * Benefit updateMany
  */
 export type BenefitUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * The data used to update Benefits.
+   */
+  data: Prisma.XOR<Prisma.BenefitUpdateManyMutationInput, Prisma.BenefitUncheckedUpdateManyInput>
+  /**
+   * Filter which Benefits to update
+   */
+  where?: Prisma.BenefitWhereInput
+  /**
+   * Limit how many Benefits to update.
+   */
+  limit?: number
+}
+
+/**
+ * Benefit updateManyAndReturn
+ */
+export type BenefitUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Benefit
+   */
+  select?: Prisma.BenefitSelectUpdateManyAndReturn<ExtArgs> | null
+  /**
+   * Omit specific fields from the Benefit
+   */
+  omit?: Prisma.BenefitOmit<ExtArgs> | null
   /**
    * The data used to update Benefits.
    */
