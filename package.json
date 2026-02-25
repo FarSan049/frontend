@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@prisma/client": "^7.4.1",
+    "prisma": "^7.4.1",
     "bcryptjs": "^3.0.3",
     "framer-motion": "^12.23.26",
     "next": "16.0.10",
@@ -26,7 +27,6 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
-    "prisma": "^7.4.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
