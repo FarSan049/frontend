@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { createCategoryAction } from "@/app/actions/category/category-create";
 import { updateCategoryAction } from "@/app/actions/category/category-update";
 import Link from "next/link";
-import { Category } from "../../../lib/generated/prisma";
+import type { Category } from "../../../lib/generated/prisma";
 
 interface CategoryFormProps {
   category?: Category;
