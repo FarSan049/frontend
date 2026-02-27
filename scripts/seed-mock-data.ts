@@ -4,6 +4,7 @@ loadEnvConfig(process.cwd());
 import { products } from "../app/lib/products";
 import { benefits } from "../app/lib/benefits";
 import { testimonials } from "../app/lib/testimonials";
+import bcrypt from "bcryptjs";
 
 async function main() {
   console.log("Environment loaded. Initializing database client...");
@@ -13,6 +14,23 @@ async function main() {
   
   try {
     console.log("Start seeding...");
+
+    // 0. Seed Admin User
+    console.log("Seeding admin user...");
+    const hashedPassword = await bcrypt.hash("12345678", 10);
+    const user = await prisma.user.upsert({
+      where: { email: "farizikhsan049@gmail.com" },
+      update: {
+        name: "fariz",
+        password: hashedPassword,
+      },
+      create: {
+        name: "fariz",
+        email: "farizikhsan049@gmail.com",
+        password: hashedPassword,
+      },
+    });
+    console.log(`Admin user ready (ID: ${user.id}, Email: ${user.email})`);
 
     // 1. Seed Categories first (extracted from products)
     const categoriesTemp = Array.from(new Set(products.map(p => p.category)));
@@ -119,7 +137,6 @@ async function main() {
     console.error("Seeding error:", error);
     throw error;
   } finally {
-    const { prisma } = await import("../lib/db");
     await prisma.$disconnect();
   }
 }

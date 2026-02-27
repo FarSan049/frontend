@@ -1,22 +1,17 @@
-// import prisma client
-import { PrismaClient } from "./generated/prisma/client";
+import { PrismaClient } from "@/lib/generated/prisma";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 // ensure only a single instance of prisma client is created
 const globalForPrisma = global as unknown as {
   prisma: PrismaClient;
 };
 
-// initialize prisma client
-const url = (process.env.PRISMA_DATABASE_URL || process.env.DATABASE_URL) as string;
-const isAccelerate = url?.startsWith("prisma://") || url?.startsWith("prisma+postgres://");
-
-const prismaOptions: any = isAccelerate
-  ? { accelerateUrl: url }
-  : { datasourceUrl: url };
+// initialize prisma client with pg driver adapter (Prisma v7 direct connection)
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 
 const prisma =
   globalForPrisma.prisma ||
-  new PrismaClient(prismaOptions);
+  new PrismaClient({ adapter });
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
