@@ -13,6 +13,7 @@ const navItems = [
   { label: "Tanaman", href: "#products", type: "section" },
   { label: "Testimoni", href: "#testimonials", type: "section" },
   { label: "Katalog", href: "/katalog", type: "page" },
+  { label: "Tentang Kami", href: "/tentang-kami", type: "page" },
 ];
 
 export default function Navbar() {
@@ -21,7 +22,6 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [open, setOpen] = useState(false);
-  const isKatalog = pathname === "/katalog";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,6 +78,8 @@ export default function Navbar() {
         {/* DESKTOP NAV */}
         <nav className="hidden md:flex items-center gap-8 font-medium">
           {navItems.map((item) => {
+            const isActive = pathname === item.href;
+
             // 👉 PAGE NAV (pindah halaman)
             if (item.type === "page") {
               return (
@@ -85,7 +87,7 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={`transition ${
-                    isKatalog
+                    isActive
                       ? "text-green-700 font-semibold"
                       : "text-green-900 hover:text-green-700"
                   }`}
