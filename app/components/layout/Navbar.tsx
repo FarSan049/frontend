@@ -115,7 +115,7 @@ export default function Navbar() {
           })}
 
           <a
-            href="https://wa.me/62xxxxxxxxxx"
+            href="https://wa.me/6281314110863?text=Halo,%20Wardhana%20Flora,%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman"
             className="ml-4 px-5 py-2 rounded-full bg-green-700 text-white hover:bg-green-800 transition"
           >
             WhatsApp
