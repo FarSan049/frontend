@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: 'Rental Tanaman Hias untuk Kantor & Event | Estetik & Praktis',
   description:
     'Sewa tanaman hias profesional untuk kantor, event, dan rumah. Konsultasi gratis via WhatsApp.',
+  keywords: ['rental tanaman hias', 'sewa tanaman kantor', 'toko bunga', 'dekorasi tanaman hias'],
 }
 
 export const dynamic = "force-dynamic";
