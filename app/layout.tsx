@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     images: ["/images/wf.png"],
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/images/wf.png",
     apple: "/images/wf.png",
   },
 };
@@ -82,7 +82,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "name": "Wardhana Flower",
-              "image": "https://wardhanaflower.com/logo.png",
+              "image": "https://wardhanaflower.com/images/wf.png",
               "@id": "https://wardhanaflower.com",
               "url": "https://wardhanaflower.com",
               "telephone": "+628123456789",
