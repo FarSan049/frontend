@@ -57,6 +57,7 @@ export default function RootLayout({
   return (
     <html lang="id">
       <head>
+        <meta name="google-site-verification" content="gve1ARrosoR6XE4BhMIUALxuldc2ismxgPVzfZmLC8I" />
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
             <Script
