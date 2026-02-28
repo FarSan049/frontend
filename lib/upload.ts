@@ -1,29 +1,23 @@
-import { writeFile } from "fs/promises";
-import { join } from "path";
-import { existsSync } from "fs";
-import { mkdir } from "fs/promises";
+import cloudinary from "./cloudinary";
 
 export async function uploadImage(file: File): Promise<string> {
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
+  try {
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
 
-  // Define upload path
-  const uploadDir = join(process.cwd(), "public", "images", "products");
-  
-  // Ensure directory exists
-  if (!existsSync(uploadDir)) {
-    await mkdir(uploadDir, { recursive: true });
+    // Convert buffer to base64 for Cloudinary upload
+    const base64Image = `data:${file.type};base64,${buffer.toString("base64")}`;
+
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(base64Image, {
+      folder: "wardhanaflower",
+      resource_type: "auto",
+    });
+
+    // Return the secure URL from Cloudinary
+    return result.secure_url;
+  } catch (error) {
+    console.error("Cloudinary upload error:", error);
+    throw new Error("Gagal mengunggah gambar ke Cloudinary");
   }
-
-  // Create unique filename
-  const timestamp = Date.now();
-  const originalName = file.name.replace(/\s+/g, "-");
-  const filename = `${timestamp}-${originalName}`;
-  const path = join(uploadDir, filename);
-
-  // Write file
-  await writeFile(path, buffer);
-
-  // Return public URL
-  return `/images/products/${filename}`;
 }

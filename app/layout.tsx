@@ -3,9 +3,50 @@ import "./globals.css";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-  title: "Wardhana Flower - Toko Bunga Terbaik di Surabaya",
-  description: "Wardhana Flower menyediakan berbagai macam bunga segar, bouquet, bunga papan, standing flower, dan dekorasi bunga untuk berbagai acara di Surabaya. Kualitas premium, desain elegan, dan pengiriman tepat waktu.",
-  keywords: "toko bunga surabaya, florist surabaya, bunga bouquet surabaya, bunga papan surabaya, karangan bunga surabaya, dekorasi bunga surabaya",
+  metadataBase: new URL("https://wardhanaflower.com"),
+  title: {
+    default: "Wardhana Flower - Toko Bunga & Rental Tanaman Depok",
+    template: "%s | Wardhana Flower",
+  },
+  description: "Wardhana Flower menyediakan bunga segar premium dan layanan rental tanaman hias profesional untuk kantor & event di Depok. Kualitas terbaik, pengiriman cepat.",
+  keywords: ["toko bunga depok", "florist depok", "rental tanaman depok", "sewa tanaman hias", "karangan bunga depok"],
+  authors: [{ name: "Wardhana Flower" }],
+  creator: "Wardhana Flower",
+  publisher: "Wardhana Flower",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Wardhana Flower - Toko Bunga & Rental Tanaman Depok",
+    description: "Bunga segar premium dan rental tanaman hias profesional di Depok.",
+    url: "https://wardhanaflower.com",
+    siteName: "Wardhana Flower",
+    images: [
+      {
+        url: "/images/wf.png",
+        width: 1200,
+        height: 630,
+        alt: "Wardhana Flower Depok",
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wardhana Flower - Toko Bunga & Rental Tanaman Depok",
+    description: "Bunga segar premium dan rental tanaman hias profesional di Depok.",
+    images: ["/images/wf.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/images/wf.png",
+  },
 };
 
 export default function RootLayout({
@@ -16,6 +57,22 @@ export default function RootLayout({
   return (
     <html lang="id">
       <head>
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
         <Script
           id="schema-org"
           type="application/ld+json"
@@ -31,7 +88,7 @@ export default function RootLayout({
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "Jl. Kayoon No. 1",
-                "addressLocality": "Surabaya",
+                "addressLocality": "Depok",
                 "postalCode": "60271",
                 "addressCountry": "ID"
               },

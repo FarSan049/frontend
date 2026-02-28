@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { updateHeroAction } from "@/app/actions/hero/hero-actions";
 import Image from "next/image";
 
@@ -29,7 +29,25 @@ export default function HeroForm({ hero }: HeroFormProps) {
     errors: {} 
   } as HeroActionState);
 
-  const heroImage = (hero?.images as string) || "/images/hero-office.jpg";
+  const initialImageUrl = (hero?.images as string) || "/images/hero-office.jpg";
+  const [previewUrl, setPreviewUrl] = useState<string>(initialImageUrl);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+    }
+  };
+
+  // Cleanup object URL
+  useEffect(() => {
+    return () => {
+      if (previewUrl && previewUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   return (
     <form action={formAction} className="space-y-6 bg-white p-8 rounded-2xl shadow-sm border border-zinc-100">
@@ -38,10 +56,11 @@ export default function HeroForm({ hero }: HeroFormProps) {
         <div className="flex items-start gap-4">
           <div className="relative w-48 h-32 rounded-xl overflow-hidden border border-zinc-200 flex-shrink-0 bg-zinc-50">
             <Image
-              src={heroImage}
+              src={previewUrl}
               alt="Hero image preview"
               fill
               className="object-cover"
+              unoptimized={previewUrl.startsWith("blob:")}
             />
           </div>
           <div className="flex-1">
@@ -49,6 +68,7 @@ export default function HeroForm({ hero }: HeroFormProps) {
               type="file"
               name="imageFile"
               accept="image/*"
+              onChange={handleImageChange}
               className="w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 transition"
             />
             <p className="text-[10px] text-zinc-400 mt-2">

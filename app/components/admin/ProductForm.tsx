@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState, useEffect } from "react";
 import { createProductAction } from "@/app/actions/product/product-create";
 import { updateProductAction } from "@/app/actions/product/product-update";
 import Link from "next/link";
@@ -37,6 +37,25 @@ export default function ProductForm({ product, categories }: ProductFormProps) {
   const initialImageUrl = product 
     ? (Array.isArray(product.images) ? product.images[0] : product.images) 
     : "";
+
+  const [previewUrl, setPreviewUrl] = useState<string>(initialImageUrl);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+    }
+  };
+
+  // Cleanup object URL
+  useEffect(() => {
+    return () => {
+      if (previewUrl && previewUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   return (
     <div className="bg-white p-8 rounded-2xl shadow-sm border border-zinc-100">
@@ -94,13 +113,14 @@ export default function ProductForm({ product, categories }: ProductFormProps) {
         <div className="space-y-2">
           <label className="text-sm font-semibold text-zinc-700 block">Product Image</label>
           <div className="flex items-start gap-4">
-            {initialImageUrl && (
-              <div className="relative w-24 h-24 rounded-xl overflow-hidden border border-zinc-200 flex-shrink-0">
+            {previewUrl && (
+              <div className="relative w-24 h-24 rounded-xl overflow-hidden border border-zinc-200 flex-shrink-0 bg-zinc-50">
                 <Image
-                  src={initialImageUrl}
-                  alt="Current product"
+                  src={previewUrl}
+                  alt="Product preview"
                   fill
                   className="object-cover"
+                  unoptimized={previewUrl.startsWith("blob:")}
                 />
               </div>
             )}
@@ -109,6 +129,7 @@ export default function ProductForm({ product, categories }: ProductFormProps) {
                 type="file"
                 name="imageFile"
                 accept="image/*"
+                onChange={handleImageChange}
                 className="w-full text-sm text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 transition"
               />
               <p className="text-[10px] text-zinc-400 mt-2">
