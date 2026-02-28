@@ -5,6 +5,7 @@ import { useHandleScrollTo } from "@/app/lib/handlescrollto";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { trackEvent } from "@/lib/gtag"
 
 const navItems = [
   { label: "Home", href: "#home", type: "section" },
@@ -115,7 +116,9 @@ export default function Navbar() {
           })}
 
           <a
-            href="https://wa.me/62xxxxxxxxxx"
+            href="https://wa.me/6281314110863?text=Halo,%20Wardhana%20Flora,%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman"
+            target="_blank"
+            rel="noopener noreferrer"
             className="ml-4 px-5 py-2 rounded-full bg-green-700 text-white hover:bg-green-800 transition"
           >
             WhatsApp
@@ -159,7 +162,16 @@ export default function Navbar() {
           )}
 
           <a
-            href="https://wa.me/62xxxxxxxxxx"
+            href="https://wa.me/6281314110863?text=Halo,%20Wardhana%20Flora,%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() =>
+              trackEvent(
+                "whatsapp_click",
+                "engagement",
+                "Landing Page WhatsApp"
+              )
+            }
             className="block mt-4 text-center px-5 py-3 rounded-full bg-green-700 text-white"
           >
             WhatsApp

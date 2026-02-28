@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import { trackEvent } from "@/lib/gtag"
 
 interface Product {
   id: string;
@@ -204,7 +205,16 @@ export default function KatalogClient({ initialProducts, categories }: KatalogCl
                     </h3>
                     <p className="mt-2 text-green-700 flex-1 line-clamp-3">{item.desc}</p>
                     <a
-                      href={`https://wa.me/6281314110863?text=Halo,%20saya%20tertarik%20dengan%20${item.name}`}
+                      href={`https://wa.me/6281213941963?text=Halo %20Wardhana%20Flora,%20saya%20tertarik%20dengan%20${item.name}.%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() =>
+                        trackEvent(
+                          "whatsapp_click",
+                          "engagement",
+                          "Landing Page WhatsApp"
+                        )
+                      }
                       className="inline-block mt-4 text-green-700 font-semibold hover:underline hover:text-green-800 transition-colors"
                     >
                       Tanya via WhatsApp →
@@ -311,7 +321,16 @@ export default function KatalogClient({ initialProducts, categories }: KatalogCl
             sesuai dengan kebutuhan Anda
           </p>
           <a
-            href="https://wa.me/6281314110863?text=Halo,%20saya%20ingin%20konsultasi%20tentang%20tanaman"
+            href="https://wa.me/6281314110863?text=Halo%20Wardhana%20Flora,%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() =>
+              trackEvent(
+                "whatsapp_click",
+                "engagement",
+                "Katalog Page WhatsApp"
+              )
+            }
             className="inline-flex items-center gap-2 mt-6 px-8 py-3 bg-green-700 text-white font-semibold rounded-full hover:bg-green-800 transition-colors duration-300 shadow-md hover:shadow-lg"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

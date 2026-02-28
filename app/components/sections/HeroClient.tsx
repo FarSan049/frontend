@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useHandleScrollTo } from "@/app/lib/handlescrollto";
+import { trackEvent } from "@/lib/gtag"
 
 interface HeroProps {
   hero: {
@@ -46,7 +47,16 @@ export default function HeroClient({ hero }: HeroProps) {
             {/* CTA */}
             <div className="mt-8 flex flex-wrap gap-4">
               <a
-                href="https://wa.me/6281314110863"
+                href="https://wa.me/6281314110863?text=Halo%20Wardhana%20Flora,%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() =>
+                  trackEvent(
+                    "whatsapp_click",
+                    "engagement",
+                    "Landing Page WhatsApp"
+                  )
+                }
                 className="px-8 py-4 bg-green-700 text-white font-semibold rounded-xl hover:bg-green-800 transition shadow-lg transition-transform duration-500 hover:scale-[1.02]"
               >
                 Konsultasi via WhatsApp

@@ -1,4 +1,5 @@
 'use client'
+import { trackEvent } from "@/lib/gtag"
 
 export default function CTA() {
   return (
@@ -13,8 +14,16 @@ export default function CTA() {
         </p>
 
         <a
-          href="https://wa.me/6281213941963"
-          onClick={() => console.log('CTA WhatsApp clicked')}
+          href="https://wa.me/6281314110863?text=Halo,%20Wardhana%20Flora,%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() =>
+            trackEvent(
+              "whatsapp_click",
+              "engagement",
+              "Hero CTA WhatsApp"
+            )
+          }
           className="inline-block mt-8 px-10 py-4 bg-white text-green-700 font-semibold rounded-xl hover:bg-green-100 transition"
         >
           Chat via WhatsApp Sekarang
