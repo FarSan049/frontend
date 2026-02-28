@@ -23,17 +23,17 @@ export default function Footer() {
           </p>
 
           {/* SOCIAL */}
-          {/* <div className="flex items-center gap-4 mt-6">
-            <a href="#" aria-label="Instagram" className="hover:text-white transition">
+          <div className="flex items-center gap-4 mt-6">
+            <a href="https://www.instagram.com/wardhanaflora?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram" className="hover:text-white transition">
               Instagram
             </a>
             <a href="#" aria-label="Facebook" className="hover:text-white transition">
               Facebook
             </a>
-            <a href="#" aria-label="WhatsApp" className="hover:text-white transition">
+            <a href="https://wa.me/6281314110863?text=Halo,%20Wardhana%20Flora,%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman" aria-label="WhatsApp" className="hover:text-white transition">
               WhatsApp
             </a>
-          </div> */}
+          </div>
         </div>
 
         {/* ALAMAT */}

@@ -1,11 +1,19 @@
 'use client'
+import { trackEvent } from "@/lib/gtag"
 
 export default function FloatingWhatsApp() {
   return (
     <a
-      href="https://wa.me/6281314110863?text=Halo,%20Wardhana%20Flora,%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman"
+      href="https://wa.me/6281314110863?text=Halo%20Wardhana%20Flora,%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman"
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() =>
+        trackEvent(
+          "whatsapp_click",
+          "engagement",
+          "Landing Page WhatsApp"
+        )
+      }
       className="fixed bottom-6 right-6 z-50 group"
       aria-label="Chat via WhatsApp"
     >

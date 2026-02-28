@@ -3,6 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from 'react';
 import Link from "next/link";
+import { trackEvent } from "@/lib/gtag"
 
 interface Product {
   id: string;
@@ -128,7 +129,16 @@ export default function ProductsClient({ products }: ProductsClientProps) {
                             </h3>
                             <p className="mt-2 text-green-700 flex-1">{item.desc}</p>
                             <a
-                              href={`https://wa.me/6281213941963?text=Halo,%20saya%20tertarik%20dengan%20${item.name}`}
+                              href={`https://wa.me/6281213941963?text=Halo%20Wardhana%20Flora,%20saya%20tertarik%20dengan%20${item.name}.%20saya%20ingin%20konsultasi%20untuk%20rental%20tanaman`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() =>
+                                trackEvent(
+                                  "whatsapp_click",
+                                  "engagement",
+                                  "Landing Page WhatsApp"
+                                )
+                              }
                               className="inline-block mt-4 text-green-700 font-semibold hover:underline"
                             >
                               Tanya via WhatsApp →
