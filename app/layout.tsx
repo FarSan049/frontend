@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
+import favicon from "./lib/favicon.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://wardhanaflower.com"),
@@ -44,8 +45,8 @@ export const metadata: Metadata = {
     images: ["/images/wf.png"],
   },
   icons: {
-    icon: "/images/wf.png",
-    apple: "/images/wf.png",
+    icon: favicon.src,
+    apple: favicon.src,
   },
 };
 
@@ -85,18 +86,18 @@ export default function RootLayout({
               "image": "https://wardhanaflower.com/images/wf.png",
               "@id": "https://wardhanaflower.com",
               "url": "https://wardhanaflower.com",
-              "telephone": "+628123456789",
+              "telephone": "+6281288339325",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "Jl. Raya Parung Ciputat, Serua, Bojongsari, Kota Depok, Jawa Barat",
                 "addressLocality": "Depok",
-                "postalCode": "60271",
+                "postalCode": "16517",
                 "addressCountry": "ID"
               },
               "geo": {
                 "@type": "GeoCoordinates",
-                "latitude": -7.2655,
-                "longitude": 112.7483
+                "latitude": -6.3500,
+                "longitude": 106.7833
               },
               "openingHoursSpecification": {
                 "@type": "OpeningHoursSpecification",
