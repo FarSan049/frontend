@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "Wardhana Flower",
     images: [
       {
-        url: "/images/wf.png",
+        url: "/images/favicon.png",
         width: 1200,
         height: 630,
         alt: "Wardhana Flower",
