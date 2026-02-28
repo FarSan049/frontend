@@ -3,8 +3,8 @@ import LoadingScreen from "@/app/components/ui/LoadingScreen";
 export default function Loading() {
   return (
     <LoadingScreen 
-      title="Menyiapkan Katalog Bunga..." 
-      subtitle="Menyusun keindahan untuk pilihan Anda"
+      title="Menyiapkan Halaman Utama..." 
+      subtitle="Membawa kesegaran Wardhana Flower ke layar Anda"
     />
   );
 }
