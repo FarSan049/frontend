@@ -53,8 +53,8 @@ export default function Footer() {
 
           <h4 className="font-semibold mb-4 text-white mt-6">Alamat Nursery</h4>
           <p className="text-sm text-green-200 leading-relaxed">
-            Jl. Raya Ciputat Parung Bursa Tanaman Hias Permata Buana Kav. 11 Bojongsari<br />
-            Sawangan Depok Jawa Barat
+            Jl. Raya Parung Ciputat, Serua, Bojongsari<br />
+            Kota Depok, Jawa Barat
           </p>
 
           <a
