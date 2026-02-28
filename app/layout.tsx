@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Script from "next/script";
-import favicon from "./lib/favicon.png";
+import favicon from "./lib/favicon.png"; // import favicon.png
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://wardhanaflower.com"),
