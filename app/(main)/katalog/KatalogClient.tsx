@@ -188,11 +188,12 @@ export default function KatalogClient({ initialProducts, categories }: KatalogCl
                 <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
                   <div className="relative overflow-hidden">
                     <Image
-                      loading="lazy"
                       src={getImageUrl(item.images)}
                       alt={item.name}
                       width={400}
                       height={400}
+                      priority={index < 4}
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                       className="h-64 w-full object-cover transition-transform duration-500 hover:scale-110"
                     />
                   </div>

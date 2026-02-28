@@ -121,6 +121,8 @@ export default function ProductsClient({ products }: ProductsClientProps) {
                             alt={item.name}
                             width={400}
                             height={400}
+                            priority={products.indexOf(item) < 3}
+                            sizes="(min-width: 768px) 33vw, 100vw"
                             className="h-64 w-full object-cover"
                           />
                           <div className="p-6 flex-1 flex flex-col">

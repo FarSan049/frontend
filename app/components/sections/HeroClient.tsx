@@ -88,8 +88,8 @@ export default function HeroClient({ hero }: HeroProps) {
               alt="Hero image"
               fill
               priority
-              sizes="(min-width: 1024px) 1200px, 100vw"
-              className="object-cover fetchpriority-high"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
             />
           </div>
         </motion.div>
